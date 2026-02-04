@@ -10,9 +10,9 @@ public class Main
     {
                          //       FENETRE        //
         JFrame fenetre = new JFrame("My First Cooking Game !");
-        
-        
+        Image blankImage = Toolkit.getDefaultToolkit().createImage(new byte[0]);
 
+        
 
                      //       CREATION OBJETS        //
 
@@ -38,7 +38,6 @@ public class Main
             imgSucre = ImageIO.read(Main.class.getResource("ressources/images/sucre.png"));
 
             ///////////////////// NE PAS OUBLIER DE CHANGER LES IMAGES DES INGREDIENTS QUAND ILS SONT CLIQUES !!!! /////////////////////
-            imgLaitPrendre = ImageIO.read(Main.class.getResource("ressources/images/milk.png"));
             imgFraisesPrendre = ImageIO.read(Main.class.getResource("ressources/images/fraises.png"));
             imgGlaconsPrendre = ImageIO.read(Main.class.getResource("ressources/images/glacons.png"));
             imgSucrePrendre = ImageIO.read(Main.class.getResource("ressources/images/sucre.png"));
@@ -51,14 +50,11 @@ public class Main
 
         Toolkit toolkit = Toolkit.getDefaultToolkit();  // creation d'une boite à outils pour accéder au curseur
 
-        Image imageCuillere = toolkit.getImage("ressources/images/cuillereSucre.png"); 
-        Cursor curseurSucre = toolkit.createCustomCursor(imageCuillere, new Point(0, 0), "cuillereSucre");
+        Image curseurSucre = toolkit.getImage("ressources/images/cuillereSucre.png"); 
 
-        Image imageFraisesPrendre = toolkit.getImage("ressources/images/fraisePrises.png");
-        Cursor curseurFraise = toolkit.createCustomCursor(imageFraisesPrendre, new Point(0, 0), "fraisePrendre");
+        Image curseurFraise = toolkit.getImage("ressources/images/fraisePrises.png");
 
-        Image imageLaitPrendre = toolkit.getImage("ressources/images/laitPrendre.png");
-        Cursor curseurLait = toolkit.createCustomCursor(imageLaitPrendre, new Point(0, 0), "laitPrendre");
+        Image curseurLait = toolkit.getImage("ressources/images/laitPrendre.png");
 
 
         // CREATION DU JEU
@@ -69,10 +65,10 @@ public class Main
         int LONGUEUR_OBJETS = 150;
         int LARGEUR_OBJETS = 150;
 
-        Ingredients lait = new Ingredients("lait", 5, 600, LONGUEUR_OBJETS, LARGEUR_OBJETS, imgLait, imgLaitPrendre, imgLait, curseurLait);
-        Ingredients sucre = new Ingredients("sucre", 350, 590, LONGUEUR_OBJETS, LARGEUR_OBJETS, imgSucre, imgSucrePrendre, imgSucre, curseurSucre);
-        Ingredients fraises = new Ingredients("fraises", 60, 690, LONGUEUR_OBJETS, LARGEUR_OBJETS, imgFraises, imgFraisesPrendre, imgFraises, curseurFraise);
-        Ingredients glacons = new Ingredients("glaçons", 300, 690, LONGUEUR_OBJETS, LARGEUR_OBJETS, imgGlacons, imgGlaconsPrendre, imgGlacons, null);
+        Ingredients lait = new Ingredients("lait", 5, 600, LONGUEUR_OBJETS, LARGEUR_OBJETS, imgLait, blankImage, imgLait, curseurLait);
+        Ingredients sucre = new Ingredients("sucre", 350, 590, LONGUEUR_OBJETS, LARGEUR_OBJETS, imgSucre, blankImage, imgSucre, curseurSucre);
+        Ingredients fraises = new Ingredients("fraises", 60, 690, LONGUEUR_OBJETS, LARGEUR_OBJETS, imgFraises, blankImage, imgFraises, curseurFraise);
+        Ingredients glacons = new Ingredients("glaçons", 300, 690, LONGUEUR_OBJETS, LARGEUR_OBJETS, imgGlacons, blankImage, imgGlacons, null);
         //gameObject boutonPause = new gameObject("pause", 930, 30, 100, 100, Color.RED);
         
 
@@ -86,19 +82,19 @@ public class Main
          
 
         ///// TAILLER LES IMAGES //////
-        for (int i = 0; i < gameP1.nbrElements; i++) {
-            if (gameP1.listeObjets[i].iActuelle != null) {
-                Image copieTailleeA = gameP1.listeObjets[i].iActuelle.getScaledInstance(LONGUEUR_OBJETS, LARGEUR_OBJETS, Image.SCALE_SMOOTH);  
-                gameP1.listeObjets[i].iActuelle = copieTailleeA; 
+        for (int i = 0; i < gameP1.getListeObjets().size(); i++) {
+            if (gameP1.listeObjets.get(i).iActuelle != null) {
+                Image copieTailleeA = gameP1.listeObjets.get(i).iActuelle.getScaledInstance(LONGUEUR_OBJETS, LARGEUR_OBJETS, Image.SCALE_SMOOTH);  
+                gameP1.listeObjets.get(i).iActuelle = copieTailleeA; 
             }
-             if (gameP1.listeObjets[i].iFerme != null) {
-                Image copieTailleeF = gameP1.listeObjets[i].iFerme.getScaledInstance(LONGUEUR_OBJETS, LARGEUR_OBJETS, Image.SCALE_SMOOTH);
-                gameP1.listeObjets[i].iFerme = copieTailleeF;
+             if (gameP1.listeObjets.get(i).iFerme != null) {
+                Image copieTailleeF = gameP1.listeObjets.get(i).iFerme.getScaledInstance(LONGUEUR_OBJETS, LARGEUR_OBJETS, Image.SCALE_SMOOTH);
+                gameP1.listeObjets.get(i).iFerme = copieTailleeF;
 
             }
-            if (gameP1.listeObjets[i].iOuvert != null) {
-                Image copieTailleeO = gameP1.listeObjets[i].iOuvert.getScaledInstance(LONGUEUR_OBJETS, LARGEUR_OBJETS, Image.SCALE_SMOOTH);
-                gameP1.listeObjets[i].iOuvert = copieTailleeO;
+            if (gameP1.listeObjets.get(i).iOuvert != null) {
+                Image copieTailleeO = gameP1.listeObjets.get(i).iOuvert.getScaledInstance(LONGUEUR_OBJETS, LARGEUR_OBJETS, Image.SCALE_SMOOTH);
+                gameP1.listeObjets.get(i).iOuvert = copieTailleeO;
             }
         }
 

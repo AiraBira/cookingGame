@@ -2,7 +2,7 @@ import java.awt.*;
 //import javax.swing.*;
 
 
-public abstract class gameObject {
+public abstract class GameObject {
     protected String nom;
     protected int posX;
     protected int posY;
@@ -13,9 +13,9 @@ public abstract class gameObject {
     protected Color c;
     protected Image iOuvert; // Image de l'objet avant utilisation
     protected Image iFerme; // Image de l'objet après utilisation 
-    protected Cursor cursor;
+    protected Image iCursor;
 
-    public gameObject (String nom, int posX, int posY, int tailleX, int tailleY, Object imageOuColor, Image iOuvert, Image iFerme, Cursor cursor) {
+    public GameObject (String nom, int posX, int posY, int tailleX, int tailleY, Object imageOuColor, Image iOuvert, Image iFerme, Image iCursor) {
         this.nom = nom;
         this.posX = posX;
         this.posY = posY;
@@ -24,7 +24,8 @@ public abstract class gameObject {
         this.isPressed = false;
         this.iOuvert = iOuvert;
         this.iFerme = iFerme;
-        this.cursor = cursor;
+        this.iCursor = iCursor;
+
         if (imageOuColor instanceof Color) {
             this.iActuelle = null;
             this.c = (Color) imageOuColor;
@@ -63,8 +64,8 @@ public abstract class gameObject {
         return c;
     }
 
-    public Cursor getCursor() {
-        return cursor;
+    public Image getiCursor() {
+        return iCursor;
     }
 
     public void toDraw(Graphics g) {

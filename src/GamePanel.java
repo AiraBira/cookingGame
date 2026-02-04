@@ -1,22 +1,29 @@
 import java.awt.*;
 import java.awt.event.*;
-
+import java.util.ArrayList;
 import javax.swing.*;
 
-public class GamePanel extends JPanel implements MouseListener {
-    protected gameObject[] listeObjets;
-    protected int nbrElements;
+public class GamePanel extends JPanel implements MouseListener, MouseMotionListener {
+    protected ArrayList<GameObject> listeObjets;
     protected Image fondCuisine;
-    protected gameObject objetClick;
+    protected GameObject objetClick;
+    protected CursorImg cursorImg;
 
-    public GamePanel(gameObject objetClick, Image fondCuisine) {
+    // Créer une image vide pour le curseur invisible
+    private final Image CURSORIMGBLANK = Toolkit.getDefaultToolkit().createImage(new byte[0]);
+    // Créer le curseur invisible
+    private final Cursor BLANKCURSOR = Toolkit.getDefaultToolkit().createCustomCursor(
+                    CURSORIMGBLANK, new Point(0, 0), "blank cursor");
+
+
+    public GamePanel(GameObject objetClick, Image fondCuisine) {
         super();
-        this.listeObjets = new gameObject[1];
+        this.listeObjets = new ArrayList<>();
         this.objetClick = objetClick;
-        this.nbrElements = 0;
         this.addMouseListener(this);
+        this.addMouseMotionListener(this);
         this.fondCuisine = fondCuisine;
-
+        this.cursorImg = new CursorImg(0,0,125,125,CURSORIMGBLANK);
     }
 
     @Override
@@ -24,18 +31,25 @@ public class GamePanel extends JPanel implements MouseListener {
 
         for (int i = 0; i < nbrObjets(); i++) { // Attention car les x et y commencent en haut à gauche de l'image et
                                                 // pas au centre !
-            if (e.getX() >= listeObjets[i].posX && e.getX() <= (listeObjets[i].posX + listeObjets[i].tailleX)
-                && e.getY() >= listeObjets[i].posY && e.getY() <= (listeObjets[i].posY + listeObjets[i].tailleY)) {
+            if (e.getX() >= listeObjets.get(i).posX && e.getX() <= (listeObjets.get(i).posX + listeObjets.get(i).tailleX)
+                && e.getY() >= listeObjets.get(i).posY && e.getY() <= (listeObjets.get(i).posY + listeObjets.get(i).tailleY)) {
                
-                listeObjets[i].isPressed = true; 
-                listeObjets[i].changerImage(); // Elle utilise une image préparée dans l'objet pour quand on appui
+                listeObjets.get(i).isPressed = true; 
+                listeObjets.get(i).changerImage(); // Elle utilise une image préparée dans l'objet pour quand on appui
                     
-                setCursor(listeObjets[i].getCursor()); // Met en place le curseur crée spécialement pour l'ingrédient touché
+                // Crée un curseur invisible pour "cacher" le curseur système
+                setCursor(BLANKCURSOR);
+                cursorImg.setCursor(listeObjets.get(i).iCursor); // Met à jour l'image du curseur flottant 
+                
+                // recentrer l'image flottante autour du point de clic
+                cursorImg.setPosX(e.getX() - cursorImg.getTailleX()/2);
+                cursorImg.setPosY(e.getY() - cursorImg.getTailleY()/2);
+                
                 break;
             } 
 
             else {
-                listeObjets[i].isPressed = false;
+                listeObjets.get(i).isPressed = false;
             }       
         }
         repaint(); // force le redraw immédiat
@@ -44,10 +58,11 @@ public class GamePanel extends JPanel implements MouseListener {
 
     @Override
     public void mouseReleased(MouseEvent e) {
+        cursorImg.setCursor(CURSORIMGBLANK); // Si on relache, on remet le curseur invisible
         setCursor(Cursor.getDefaultCursor());
         for (int i = 0; i < nbrObjets(); i++) {
-            listeObjets[i].isPressed = false;
-            listeObjets[i].changerImage();
+            listeObjets.get(i).isPressed = false;
+            listeObjets.get(i).changerImage();
             
         }
         repaint();
@@ -65,46 +80,47 @@ public class GamePanel extends JPanel implements MouseListener {
     public void mouseExited(MouseEvent e) {
     }
 
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        // déplacer l'image flottante pour suivre la souris (centrée)
+        cursorImg.setPosX(e.getX() - cursorImg.getTailleX()/2);
+        cursorImg.setPosY(e.getY() - cursorImg.getTailleY()/2);
+        repaint();
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        mouseMoved(e);
+    }
+
 
     public Image getFondCuisine() {
         return fondCuisine;
     }
 
-    public gameObject[] getListeObjets() {
+    public ArrayList<GameObject> getListeObjets() {
         return listeObjets;
     }
 
-    public gameObject getObjetClick() {
+    public GameObject getObjetClick() {
         return objetClick;
     }
 
     public int nbrObjets() {
-        return nbrElements;
+        return listeObjets.size();
     }
 
-    public void addObjectList(gameObject o) { // Ajoute un objet à la liste d'objets. La liste est dynamique,
+    public void addObjectList(GameObject o) { // Ajoute un objet à la liste d'objets. La liste est dynamique,
                                               // elle s'adapte toute seule quand elle n'a plus de place.
-        if (nbrElements < listeObjets.length) {
-            listeObjets[nbrElements] = o;
-            nbrElements++;
-        } else {
-            gameObject[] nouvelleListeObjets = new gameObject[listeObjets.length * 2];
-            for (int i = 0; i < listeObjets.length; i++) {
-                nouvelleListeObjets[i] = listeObjets[i];
-            }
-            nouvelleListeObjets[listeObjets.length] = o;
-
-            listeObjets = nouvelleListeObjets;
-            nbrElements++;
-
-        }
-
+        listeObjets.add(o);
     }
 
     public void toDrawAll(Graphics g) { /// Dessine tous les objets d'un coup
-        for (int i = 0; i < nbrElements; i++) {
-            listeObjets[i].toDraw(g);
+        for (GameObject obj : listeObjets) {
+            obj.toDraw(g);
         }
+        // Dessine le curseur flottant au-dessus de tous les objets
+        if (cursorImg != null) cursorImg.toDraw(g);
     }
 
     @Override
