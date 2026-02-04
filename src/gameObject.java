@@ -13,9 +13,23 @@ public abstract class GameObject {
     protected Color c;
     protected Image iOuvert; // Image de l'objet avant utilisation
     protected Image iFerme; // Image de l'objet après utilisation 
-    protected Image iCursor;
 
-    public GameObject (String nom, int posX, int posY, int tailleX, int tailleY, Object imageOuColor, Image iOuvert, Image iFerme, Image iCursor) {
+    protected Image iCursor;
+    protected int iCursorTailleX;
+    protected int iCursorTailleY;
+
+    public GameObject (String nom,
+                       int posX,
+                       int posY, 
+                       int tailleX,
+                       int tailleY,
+                       Object imageOuColor,
+                       Image iOuvert,
+                       Image iFerme,
+                       Image iCursor,
+                       int iCursorTailleX,
+                       int iCursorTailleY) {
+                        
         this.nom = nom;
         this.posX = posX;
         this.posY = posY;
@@ -25,6 +39,8 @@ public abstract class GameObject {
         this.iOuvert = iOuvert;
         this.iFerme = iFerme;
         this.iCursor = iCursor;
+        this.iCursorTailleX = iCursorTailleX;
+        this.iCursorTailleY = iCursorTailleY;
 
         if (imageOuColor instanceof Color) {
             this.iActuelle = null;
@@ -85,5 +101,33 @@ public abstract class GameObject {
         else {
             iActuelle = iFerme;
         }
+    }
+
+    public boolean isPressed() {
+        return isPressed;
+    }
+
+    public Image getiActuelle() {
+        return iActuelle;
+    }
+
+    public Color getC() {
+        return c;
+    }
+
+    public Image getiOuvert() {
+        return iOuvert;
+    }
+
+    public Image getiFerme() {
+        return iFerme;
+    }
+
+    public int getiCursorTailleX() {
+        return iCursorTailleX;
+    }
+
+    public int getiCursorTailleY() {
+        return iCursorTailleY;
     }
 }

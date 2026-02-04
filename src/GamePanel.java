@@ -23,7 +23,7 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
         this.fondCuisine = fondCuisine;
-        this.cursorImg = new CursorImg(0,0,125,125,CURSORIMGBLANK);
+        this.cursorImg = new CursorImg(0,0,150,150,CURSORIMGBLANK);
     }
 
     @Override
@@ -42,6 +42,8 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
                 cursorImg.setCursor(listeObjets.get(i).iCursor); // Met à jour l'image du curseur flottant 
                 
                 // recentrer l'image flottante autour du point de clic
+                cursorImg.setTailleX(listeObjets.get(i).iCursorTailleX);
+                cursorImg.setTailleY(listeObjets.get(i).iCursorTailleY);
                 cursorImg.setPosX(e.getX() - cursorImg.getTailleX()/2);
                 cursorImg.setPosY(e.getY() - cursorImg.getTailleY()/2);
                 

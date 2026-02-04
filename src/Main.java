@@ -65,10 +65,10 @@ public class Main
         int LONGUEUR_OBJETS = 150;
         int LARGEUR_OBJETS = 150;
 
-        Ingredients lait = new Ingredients("lait", 5, 600, LONGUEUR_OBJETS, LARGEUR_OBJETS, imgLait, blankImage, imgLait, curseurLait);
-        Ingredients sucre = new Ingredients("sucre", 350, 590, LONGUEUR_OBJETS, LARGEUR_OBJETS, imgSucre, blankImage, imgSucre, curseurSucre);
-        Ingredients fraises = new Ingredients("fraises", 60, 690, LONGUEUR_OBJETS, LARGEUR_OBJETS, imgFraises, blankImage, imgFraises, curseurFraise);
-        Ingredients glacons = new Ingredients("glaçons", 300, 690, LONGUEUR_OBJETS, LARGEUR_OBJETS, imgGlacons, blankImage, imgGlacons, null);
+        Ingredients lait = new Ingredients("lait", 5, 600, LONGUEUR_OBJETS, LARGEUR_OBJETS, imgLait, blankImage, imgLait, curseurLait, 140, 140);
+        Ingredients sucre = new Ingredients("sucre", 350, 590, LONGUEUR_OBJETS, LARGEUR_OBJETS, imgSucre, blankImage, imgSucre, curseurSucre, 140, 140);
+        Ingredients fraises = new Ingredients("fraises", 60, 690, LONGUEUR_OBJETS, LARGEUR_OBJETS, imgFraises, blankImage, imgFraises, curseurFraise, 90, 90);
+        Ingredients glacons = new Ingredients("glaçons", 300, 690, LONGUEUR_OBJETS, LARGEUR_OBJETS, imgGlacons, blankImage, imgGlacons, null, 100, 100);
         //gameObject boutonPause = new gameObject("pause", 930, 30, 100, 100, Color.RED);
         
 
@@ -104,6 +104,7 @@ public class Main
         fenetre.add(gameP1);
         fenetre.setSize(540, 960);
         fenetre.setVisible(true);
+        fenetre.setResizable(false);
         fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     }
