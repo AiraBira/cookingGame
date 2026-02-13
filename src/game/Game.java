@@ -16,9 +16,12 @@ public class Game {
     protected HashMap<String, Image> images;
 
     private JFrame fenetre;
+    private CardLayout layout;
+    private JPanel container; // Le panel parent qui contient tout
+
     private StartPanel menu;
     private GamePanel partie;
-
+    
 
     // ETAT DU JEU 
     protected int state = 0; // 0 : menu, 1 : jeu, 2 : pause, 3 : fin
@@ -26,26 +29,56 @@ public class Game {
 
     public Game() {
         fenetre = new JFrame("My First Cooking Game !");
+        layout = new CardLayout();
+        container = new JPanel(layout);
+
+        menu = new StartPanel(); // Ici mettre les images du menu (bouton start et image du personnage)
+
         images = new HashMap<>();
-        
-        menu = new StartPanel(null, null); // Ici mettre les images du menu (bouton start et image du personnage)
 
         // CREATION DE LA PARTIE
         creationImages();
         partie = new GamePanel(null, getListImages().get("fondCuisine"));
         creationIngredients(getListImages(), partie);  
         tailleImages(partie.getListeObjets());
+
+        // Ajout des écrans au container avec des noms uniques
+        container.add(menu, "MENU");
+        container.add(partie, "JEU");
+
+        fenetre.add(container);
+        fenetre.setSize(540, 960);
+        fenetre.setResizable(false);
+        fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        fenetre.setVisible(true);
+        start();
+    }
+
+
+    public void changerEtat(int nouvelEtat) {
+        this.state = nouvelEtat;
+        if (state == 0) {
+            layout.show(container, "MENU");
+        } else if (state == 1) {
+            layout.show(container, "JEU");
+            partie.requestFocus(); // Important pour les contrôles clavier
+        }
     }
 
 
     public void start() {
-        //getFenetre().add(getMenu());
-        getFenetre().add(getPartie());
+        Timer timer = new Timer(16, e -> {
+            update();
+        });
+        timer.start();
+    }
 
-        getFenetre().setSize(540, 960);
-        getFenetre().setVisible(true);
-        getFenetre().setResizable(false);
-        getFenetre().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+    public void update() {
+        // Au lieu de vérifier en boucle, on attend l'événement du bouton dans le StartPanel
+        if (getMenu().isStartButtonClicked() && getState() == 0) {
+            changerEtat(1);
+        }
     }
 
 
@@ -139,6 +172,9 @@ public class Game {
         return state;
     }
 
+    public void setState(int n) {
+        state = n;
+    }
 
     public HashMap<String, Image> getImages() {
         return images;
