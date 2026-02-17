@@ -5,7 +5,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.event.*;
-
+import java.util.ArrayList;
+import java.util.List;
 
 public class StartPanel extends JPanel implements MouseListener, MouseMotionListener{
     // Dimensions de la fenêtre

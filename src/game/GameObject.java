@@ -131,4 +131,56 @@ public abstract class GameObject {
     public int getiCursorTailleY() {
         return iCursorTailleY;
     }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public void setPosX(int posX) {
+        this.posX = posX;
+    }
+
+    public void setPosY(int posY) {
+        this.posY = posY;
+    }
+
+    public void setTailleX(int tailleX) {
+        this.tailleX = tailleX;
+    }
+
+    public void setTailleY(int tailleY) {
+        this.tailleY = tailleY;
+    }
+
+    public void setPressed(boolean isPressed) {
+        this.isPressed = isPressed;
+    }
+
+    public void setiActuelle(Image iActuelle) {
+        this.iActuelle = iActuelle;
+    }
+
+    public void setC(Color c) {
+        this.c = c;
+    }
+
+    public void setiOuvert(Image iOuvert) {
+        this.iOuvert = iOuvert;
+    }
+
+    public void setiFerme(Image iFerme) {
+        this.iFerme = iFerme;
+    }
+
+    public void setiCursor(Image iCursor) {
+        this.iCursor = iCursor;
+    }
+
+    public void setiCursorTailleX(int iCursorTailleX) {
+        this.iCursorTailleX = iCursorTailleX;
+    }
+
+    public void setiCursorTailleY(int iCursorTailleY) {
+        this.iCursorTailleY = iCursorTailleY;
+    }
 }
