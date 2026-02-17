@@ -127,13 +127,13 @@ public class Game {
                 getListImages().get("imgLait"), blankImage, getListImages().get("imgLait"),
                 getListImages().get("curseurLait"), 140, 140);
         Ingredients sucre = new Ingredients("sucre", 350, 590, LONGUEUR_OBJETS, LARGEUR_OBJETS,
-                getListImages().get("imgSucre"), blankImage, getListImages().get("imgSucre"),
+                getListImages().get("imgSucre"), getListImages().get("imgSucre"), getListImages().get("imgSucre"),
                 getListImages().get("curseurSucre"), 140, 140);
         Ingredients fraises = new Ingredients("fraises", 60, 690, LONGUEUR_OBJETS, LARGEUR_OBJETS,
-                getListImages().get("imgFraises"), blankImage, getListImages().get("imgFraises"),
+                getListImages().get("imgFraises"), getListImages().get("imgFraises"), getListImages().get("imgFraises"),
                 getListImages().get("curseurFraise"), 90, 90);
         Ingredients glacons = new Ingredients("glaçons", 300, 690, LONGUEUR_OBJETS, LARGEUR_OBJETS,
-                getListImages().get("imgGlacons"), blankImage, getListImages().get("imgGlacons"),
+                getListImages().get("imgGlacons"), getListImages().get("imgGlacons"), getListImages().get("imgGlacons"),
                 getListImages().get("curseurGlacon"), 100, 100);
 
         partie.addObjectList(lait);
@@ -187,8 +187,7 @@ public class Game {
         }
         batteurAnimations.add(anim3);
 
-        InteractifObject batteur = new InteractifObject("batteur", 160, 500, LONGUEUR_OBJETS, LARGEUR_OBJETS,
-                batteurAnimations, LARGEUR_OBJETS+60, LONGUEUR_OBJETS+60);
+        InteractifObject batteur = new InteractifObject("batteur", 160, 500, LONGUEUR_OBJETS, LARGEUR_OBJETS, batteurAnimations);
 
         partie.addObjectList(batteur);
     }

@@ -11,12 +11,11 @@ public class InteractifObject extends GameObject {
     private List<List<Image>> animations;
 
     public InteractifObject(String nom, int posX, int posY,
-            int tailleX, int tailleY, List<List<Image>> animations,
-            int iCursorTailleX, int iCursorTailleY) {
+            int tailleX, int tailleY, List<List<Image>> animations) {
 
         super(nom, posX, posY, tailleX, tailleY, animations.get(0).get(0), animations.get(0).get(2),
                 animations.get(0).get(0),
-                animations.get(0).get(1), iCursorTailleX, iCursorTailleY);
+                null, 0, 0);
 
         if (animations == null || animations.size() < 3) {
             throw new IllegalArgumentException("animations must contain at least 3 images");
